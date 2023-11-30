@@ -1,0 +1,393 @@
+<link rel="stylesheet" href="css/componentStyle.css">
+<div class="container">
+    <div class="row">
+        <div class="col-75">
+            <input type="text" class ="searchBar" id="componentSearchBar" onkeyup="searchComponents()" placeholder=" Search a component">
+        </div>
+            <div class="col-25">
+                <div class="col-25" style="margin-top: 0px;">
+                    <input type="button" class="submitBtn" value="Add" style="float: left; margin-left: 12px; margin-top: 3px;" onclick="openPopup('addComponent')">
+                </div>
+                <div class="col-25">
+                    <form id="fileUploadForm" enctype="multipart/form-data">
+                        <!-- class="uploadFileButton" -->
+                        <input type="file" name="file" id="fileInput"  accept=".xls, .csv" onchange="openPopup('addBOM')" >
+                    </form>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-75">
+            <table id="componentTable" class="deviceTable"> 
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>type</th>
+                        <th>Qty</th>
+                        <th>Buyer</th>
+                        <th>Supplier</th>
+                        <th>Supplier number</th>
+                        <th>Purchase Date</th>
+                        <th>Datasheet</th>
+                        <th>Price/piece</th>
+                        <th>Price Tot</th>
+                        <!-- <th><button  class="ellipsisbtn" onclick="openPopup('edit')"> <i class="fa fa-ellipsis-v"></i></button></i></th> -->
+                    </tr>
+                </thead>
+                <tbody id ="tableBody">
+                    <!-- Device rows will be added dynamically here -->
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+
+<!-- ADD COMPONENT -->
+<div id="addComponent" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <!-- Content of the popup goes here -->
+        <h2>Add a component</h2>
+        <div class="top-line"></div>
+        <div class="container">
+            <!-- component name -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_name" class="formlabel">Component name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_name" class ="formInput" placeholder="Enter component name...">
+                </div>
+            </div>
+            <!-- scrolling list -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_buyer" class="formlabel">Buyer</label>
+                </div>
+                <div class="col-75">
+                    <select id="component_buyer" class="rollingList">
+                        <option value="GV" selected>GOBLIN VISION</option>
+                        <option value="Andeol">Andeol</option>
+                        <option value="Colin">Colin</option>
+                        <option value="Donation">Donation</option>
+                        <option value="Gift">Gift</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_quantity" class="formlabel">Quantity</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_quantity" class ="formInput" placeholder="Quantity">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_price" class="formlabel">Price</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_price" class ="formInput" placeholder="Price">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_purchase_date" class="formlabel">purchase date</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_purchase_date" class ="formInput" placeholder="Purchase date">
+                </div>
+            </div>
+                  <div class="row">
+                <div class="col-25">
+                    <label for="component_location" class="formlabel">Component location</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_location" class ="formInput" placeholder="Location">
+                </div>
+            </div> 
+
+            <!-- Scrolling list for component type -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="typeOfComponent" class="formlabel">Component type</label>
+                </div>
+                <div class="col-75">
+                    <select id="typeOfComponent" class="rollingList" >
+                        <option value="AOP" selected>AOP</option>
+                        <option value="Resistor">Resistor</option>
+                        <option value="Condensator">Condensator</option>
+                        <option value="Inductor">Inductor</option>
+                        <option value="Diode">Diode</option>
+                        <option value="Logic">Logic</option>
+                        <option value="Potentiometer">Potentiometer</option>
+                        <option value="AnalogSwitch">Analog Switch</option>
+                        <option value="DevModule">Dev Module</option>
+                        <option value="LineDriver">Line Driver</option>
+                        <option value="MicroController">Micro Controller</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_supplier" class="formlabel">Supplier</label>
+                </div>
+                <div class="col-75">
+                    <select id="component_supplier" class="rollingList">
+                        <option value="Mouser" selected>Mouser</option>
+                        <option value="Reichelt">Reichelt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_supplier_number" class="formlabel">Supplier number</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_supplier_number" class ="formInput" placeholder="Supplier Number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_datasheet" class="formlabel">Datasheet </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="component_datasheet" class ="formInput" placeholder="Datasheet link">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="component_desc" class="formlabel">Component description</label>
+                </div>
+                <div class="col-75">
+                    <!-- <input type="text" id="component_desc" class ="formInput" placeholder=""> -->
+                    <textarea id="component_desc" class ="formInputTxtArea" style="height:200px"></textarea>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-25">
+                    <form id="fileUploadForm" enctype="multipart/form-data">
+                        <input type="file" name="file" id="fileInputUNUSED" accept=".xls, .csv" class="uploadFileButton" style="display: none;" >
+                    </form>
+                </div>
+                <div class="col-75">
+                    <input type="button" class ="submitBtn" value="Add" onclick="addComponentToDatabase(), closePopup()">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD COMPONENT LIST -->
+<div id="addBOM" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <!-- Content of the popup goes here -->
+        <h2>Add a component list</h2>
+        <div class="top-line"></div>
+        <div class="container">
+            <!-- component name -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="command_number" class="formlabel">Command Number</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="command_number" class ="formInput">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="command_supplier" class="formlabel">Supplier</label>
+                </div>
+                <div class="col-75">
+                    <select id="command_supplier" class="rollingList">
+                        <option value="Mouser" selected>Mouser</option>
+                        <option value="Reichelt">Reichelt</option>
+                    </select>
+                </div>
+            </div>
+            <!-- scrolling list -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="command_buyer" class="formlabel">Buyer</label>
+                </div>
+                <div class="col-75">
+                    <select id="command_buyer" class="rollingList">
+                        <option value="GV" selected>GOBLIN VISION</option>
+                        <option value="Andeol">Andeol</option>
+                        <option value="Colin">Colin</option>
+                        <option value="Donation">Donation</option>
+                        <option value="Gift">Gift</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="command_purchase_date" class="formlabel">purchase date</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="command_purchase_date" class="formInput" placeholder="DD,MM,YY" pattern="\d{2},\d{2},\d{2}" title="DD,MM,YY" required>
+                    <!-- <input type="text" id="component_purchase_date" class ="formInput" pattern="\d{2},\d{2},\d{2}" placeholder="Purchase date"> -->
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-25">
+                    <form id="fileUploadForm" enctype="multipart/form-data">
+                        <input type="file" name="file" id="fileInput" accept=".xls, .csv" class="uploadFileButton" style="display: none;" >
+                    </form>
+                </div>
+                <div class="col-75">
+                    <input type="button" class ="submitBtn" value="Add" onclick="addComponentListToDatabase(), closePopup('addComponent')">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal (popup) -->
+<div id="edit" class="modal">
+    <div class="modal-content" id ="contentDiv">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <!-- Content of the popup goes here -->
+        <h2 id = "editComponentModalTitle"></h2>
+        <div class="top-line"></div>
+        <div class="container">
+            <!-- Component name -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_name" class="formlabel">Component name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_name" class ="formInput" placeholder="Enter component name...">
+                </div>
+            </div>
+            <!-- Scrolling list -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_buyer" class="formlabel">Buyer</label>
+                </div>
+                <div class="col-75">
+                    <select id="edit_component_buyer" class="rollingList">
+                        <option value="GV">GOBLIN VISION</option>
+                        <option value="Andeol">Andeol</option>
+                        <option value="Colin">Colin</option>
+                        <option value="Donation">Donation</option>
+                        <option value="Gift">Gift</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_quantity" class="formlabel">Quantity</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_quantity" class ="formInput" placeholder="Quantity">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_price" class="formlabel">Price</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_price" class ="formInput" placeholder="Price">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_purchase_date" class="formlabel">Purchase date</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_purchase_date" class ="formInput" placeholder="Purchase date">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_location" class="formlabel">Component location</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_location" class ="formInput" placeholder="Location">
+                </div>
+            </div> 
+
+            <!-- Scrolling list for component type -->
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_typeOfComponent" class="formlabel">Component type</label>
+                </div>
+                <div class="col-75">
+                    <select id="edit_typeOfComponent" class="rollingList" >
+                        <option value="AOP" selected>AOP</option>
+                        <option value="Resistor">Resistor</option>
+                        <option value="Condensator">Condensator</option>
+                        <option value="Inductor">Inductor</option>
+                        <option value="Diode">Diode</option>
+                        <option value="Logic">Logic</option>
+                        <option value="Potentiometer">Potentiometer</option>
+                        <option value="AnalogSwitch">Analog Switch</option>
+                        <option value="DevModule">Dev Module</option>
+                        <option value="LineDriver">Line Driver</option>
+                        <option value="MicroController">Micro Controller</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_supplier" class="formlabel">Supplier</label>
+                </div>
+                <div class="col-75">
+                    <select id="edit_component_supplier" class="rollingList">
+                        <option value="Mouser" selected>Mouser</option>
+                        <option value="Reichelt">Reichelt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_supplier_number" class="formlabel">Supplier number</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_supplier_number" class ="formInput" placeholder="Supplier Number">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_datasheet" class="formlabel">Datasheet </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="edit_component_datasheet" class ="formInput" placeholder="Datasheet link">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="edit_component_desc" class="formlabel">Component description</label>
+                </div>
+                <div class="col-75">
+                    <!-- <input type="text" id="edit_component_desc" class ="formInput" placeholder=""> -->
+                    <textarea id="edit_component_desc" class ="formInputTxtArea" style="height:200px"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <form id="fileUploadForm" enctype="multipart/form-data">
+                        <input type="file" name="file" id="fileInputUNUSED" accept=".xls, .csv" class="uploadFileButton" style="display: none;" >
+                    </form>
+                </div>
+                <div class="col-75">
+                    <input type="button" class ="submitBtn" value="Edit" onclick="edit(), closePopup()">
+                </div>
+            </div>
+    </div>
+</div>

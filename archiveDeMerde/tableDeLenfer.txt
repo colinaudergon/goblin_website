@@ -1,0 +1,22 @@
+<table id="componentTable" class="deviceTable"> 
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>type</th>
+                        <th>Qty</th>
+                        <th>Buyer</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Purchase Date</th>
+                        <th>Type</th>
+                        <th>Datasheet</th>
+                        <th><button  class="ellipsisbtn" onclick="openPopup('edit')"> <i class="fa fa-ellipsis-v"></i></button></i></th>
+                    </tr>
+                </thead>
+                <tbody id ="tableBody">
+                    <td>${component.id}</td>
+                    <!-- Device rows will be added dynamically here -->
+                    
+                </tbody>
+            </table> 
