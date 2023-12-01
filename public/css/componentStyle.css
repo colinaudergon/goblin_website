@@ -13,10 +13,9 @@
   /* Style for the header row */
   .deviceTable th {
     background-color: transparent; /* Light gray background for header row */
+    cursor: pointer;
   }
   
-  
-
   .tbody{
     background-color: transparent;
   }

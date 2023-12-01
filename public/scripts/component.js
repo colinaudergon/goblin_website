@@ -23,7 +23,7 @@ function fetchComponents() {
                          <td>${component.compPurchaseDate}</td>
                          <td>${component.compDatasheet}</td>
                          <td>${component.compPrice}</td>
-                         <th style="text-align: center;">${(component.compQty * parseFloat(component.compPrice.match(/\d+\.\d+/)[0])).toFixed(2)}</th>
+                         <th style="text-align: center;">${(component.compQty * parsePrice(component.compPrice)).toFixed(2)}</th>
                          <td><button class="ellipsisbtn" onclick="openEditPopup('${component._id}','${component.compName}','${component.compType}','${component.compQty}','${component.compBuyer}','${component.compPurchaseDate}','${component.compDatasheet}','${component.compPrice}','${component.compDesc}','${component.compSupplierNbr}','${component.compSupplier}')"> <i class="fa fa-ellipsis-v"></i></button></td>`;
 
         tableBody.appendChild(row);
@@ -32,7 +32,11 @@ function fetchComponents() {
     .catch(error => console.error('Error fetching components:', error));
 }
 
-//
+function parsePrice(price) {
+  const match = price.match(/\d+\.\d+/);
+  return match ? parseFloat(match[0]) : 0; // Default to 0 if no match
+}
+
 
 //TODO: IMPLEMENT THIS FUNCTION
 function searchComponents() {
@@ -218,7 +222,6 @@ async function editComponentInDatabase(componentId) {
     response = await fetch('/api/components/edit', options)
     const result = await response.json();
     console.log("Success:", result);
-    fetchComponents();
   } catch (error) {
     console.error("Error:", error);
   }
