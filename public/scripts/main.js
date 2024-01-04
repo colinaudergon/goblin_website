@@ -23,3 +23,5 @@ function loadPage(page,pageTitle) {
         })
         .catch(error => console.error('Error loading page:', error));
 }
+
+
